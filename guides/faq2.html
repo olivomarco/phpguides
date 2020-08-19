@@ -1,0 +1,118 @@
+<HTML>
+<HEAD>
+<TITLE>FAQ sul PHP</TITLE>
+</HEAD>
+
+<BODY>
+<FONT face="Verdana, Arial, Helvetica, Sans Serif" size="3">
+&copy; Marco Olivo &lt;<A href="mailto:me@olivo.net">me@olivo.net</A>&gt;, luglio 2001<BR><BR>
+<!-- $Id$ -->
+<OL>
+<LI><H2>Ho programmato un sito interamente in ASP, ma ora vorrei passare al PHP. Cosa faccio? Riscrivo tutto il codice da zero?</H2>
+No. Esiste un programma, chiamato ASP2PHP che esegue la traduzione in maniera automatica per te. Lo trovi all'indirizzo Internet <A href="http://asp2php.naken.cc/">http://asp2php.naken.cc/</A><BR><BR></LI>
+<LI><H2>Posso eseguire uno script PHP dalla shell, cio&egrave; senza farlo girare sotto il webserver? (cio&egrave; come in Perl, o come se fosse un programma C)</H2>Se sei in ambiente Unix/Linux c'&egrave; una possibilit&agrave; per fare quello che chiedi. Prova a digitare da shell il comando &quot;php -v&quot;. Se otterrai un output allora questo significa che il PHP &egrave; compilato come CGI e puoi quindi eseguire i tuoi scripts come se fossero degli scripts di shell.<BR>
+Sar&agrave; sufficiente che tu digiti il comando:<BR>
+<PRE>php nomescript.php</PRE>
+dal prompt della shell per eseguire il tuo programma<BR>
+NOTA: magari il PHP &egrave; stato compilato come CGI ma il suo percorso non &egrave; contenuto nel PATH. Ti consigliamo di fare una ricerca sul filesystem pi&ugrave; accurata (magari con il comando Unix &quot;find&quot;) oppure chiedere direttamente al tuo amministratore di sistema (se non lo sei tu)<BR><BR></LI>
+<LI><H2>Con quale programma posso scrivere uno script PHP?</H2>
+Con un qualunque editor di testo. Uno script PHP &egrave; un file di testo (ricordi? viene interpretato, non compilato) e pertanto puoi usare qualunque programma come il Notepad di Windows o vi su sistemi Unix. Consigliamo comunque programmi che facciano la colorazione della sintassi, come ad esempio TextPad su sistemi Windows o Emacs su sistemi Unix/Linux<BR><BR></LI>
+<LI><H2>Vorrei avere qualche informazione sulla versione del PHP, sui moduli, su come &egrave; compilato, etc. etc. etc.</H2>C'&egrave; una funzione che ti viene in aiuto (talvolta, specie su spazi gratuiti, viene disabilitata dagli amministratori): si tratta della chiamata phpinfo() che restituisce una pagina di informazioni su tutto l'ambiente in cui gira il tuo interprete. Queste informazioni possono essere molto utili se vuoi sapere qualche dettaglio che non riesci a scoprire altrimenti, come ad esempio se MySQL accetta connessioni persistenti, se sono supportati i tags &lt;? e ?&gt;, etc.<BR>
+Prova a scrivere questo script e a vederlo con il tuo browser, troverai tantissime informazioni:<BR>
+<PRE>
+&lt;?PHP
+phpinfo();
+?&gt;
+</PRE>
+</LI>
+<LI><H2>Voglio che lo script, lanciato dall'utente, finisca di eseguire anche se questi ha cliccato sul pulsante &quot;stop&quot; nel suo browser. Come faccio?</H2>Puoi usare la chiamata ignore_user_abort() che permette di ignorare azioni dell'utente. Lo script continuer&agrave; ad eseguire fintantoch&eacute; non terminer&agrave; per conto suo o non verr&agrave; &quot;killato&quot; dall'amministratore o da chi ha i privilegi per farlo.<BR>Utile nel caso il tuo script esegua alcune query che devono assolutamente essere portate a termine pena l'inconsistenza dei dati salvati nel DBMS.<BR><BR></LI>
+<LI><H2>Eseguendo il mio script ottengo un errore di timeout. Che faccio?</H2>Nel file di configurazione del PHP (php.ini) &egrave; presente una direttiva che permette di impostare la durata massima di esecuzione di uno script scritto in PHP. Questo &egrave; utile per prevenire che eventuali script buggati (o maligni) consumino risorse preziose al webserver girando all'infinito e consumando pertanto preziosi cicli di CPU e ingenti quantitativi di RAM.<BR>
+Nella maggior parte degli ambienti (tranne che in alcuni ambienti particolari) puoi impostare la durata dell'esecuzione di uno script tramite la chiamata set_time_limit($time_amount); dove $time_amount &egrave; una variabile intera che specifica il numero di secondi massimo di esecuzione di uno script PHP.<BR>
+Solitamente tale valore &egrave; settato a 30 dall'amministratore di sistema, ma puoi aumentarlo con la chiamata appena vista nel caso di script molto complessi e che molto probabilmente richiederanno pi&ugrave; di 30 secondi per essere eseguiti. Impostando $time_amount a 0 otterrai invece l'esecuzione dello script fino a che non termina per conto suo (estremamente pericoloso, specie se nello script c'&egrave; anche una chiamata ignore_user_abort() in quanto potresti lanciare uno script che non riesci pi&ugrave; a fermare e dovrebbe intervenire l'amministratore di sistema)<BR><BR></LI>
+<LI><H2>Come faccio a trasformare una stringa da maiuscolo a minuscolo e viceversa?</H2>Puoi usare rispettivamente le funzioni strtolower() e strtoupper() passandogli come argomento la stringa da convertire. E' ovvio che se la stringa &egrave; gi&agrave; minuscola/maiuscola rimarr&agrave; come tale (ti viene restituita dalla chiamata).<BR>
+Es.<BR>
+<PRE>
+&lt;?PHP
+echo strtolower('Pippo');	/* scrive pippo */
+echo strtolower('pippo');	/* scrive ancora pippo (la stringa era gi&agrave; minuscola) */
+?&gt;
+</PRE></LI>
+<LI><H2>Installazione PHP: come modulo di Apache o come CGI?</H2>Ci sono vantaggi e svantaggi ad entrambi gli approcci (non avrebbero senso di esistere entrambi altrimenti)<BR>
+Nel primo caso la risposta del webserver sar&agrave; migliore in quanto ad ogni richiesta non verr&agrave; creato un nuovo processo dato che il modulo - statico o dinamico - sar&agrave; caricato insieme ad Apache e pertanto risponder&agrave; lui alla interpretazione degli scripts. Tuttavia in questo caso non potrai eseguire scripts PHP da shell, come visto invece prima.<BR>
+Nell'altro caso, a scapito delle performances (ogni script che gira sar&agrave; un nuovo processo), avrai la possibilit&agrave; di eseguire gli scripts anche da shell, il che pu&ograve; essere utile in certi casi.<BR>
+Ti consigliamo comunque di reperire maggiori informazioni prima di installare il PHP come modulo CGI: infatti in questa &quot;versione&quot; il PHP &egrave; maggiormente soggetto a pericolosi problemi di sicurezza (vedi in particolare le risorse sul sito ufficiale, ed in special modo l'ottimo manuale)<BR><BR></LI>
+<LI><H2>Come posso conoscere l'indirizzo IP del visitatore? E il suo browser? E...</H2>Per conoscere tutte queste informazioni devi anzitutto sapere che tutti questi valori altro non sono che variabili d'ambiente che il webserver mette a disposizione degli scripts.<BR>
+Conoscendo il nome della variabile che ci interessa (quasi qualunque cosa tu voglia sapere &egrave; presente in una specifica variabile), il modo per accedervi &egrave; usare la chiamata getenv() passandole come argomento il nome della variabile da recuperare (senza il dollaro iniziale ed avendo cura di passarla come stringa, cio&egrave; con gli apici iniziali e finali)<BR><BR>
+Due variabili comunemente usate sono REMOTE_ADDR (indirizzo del visitatore) e HTTP_USER_AGENT (nome del browser dell'utente)<BR>
+Per avere una lista completa ti consigliamo di sfogliare la documentazione di Apache, partendo dall'indirizzo <A href="http://www.apache.org/">http://www.apache.org/</A><BR>
+<BR>
+Es.<BR>
+<PRE>
+&lt;?PHP
+/* stampa il contenuto della variabile di ambiente di nome REMOTE_ADDR (contiene l'IP del visitatore) */
+echo getenv('REMOTE_ADDR');
+?&gt;
+</PRE>
+</LI>
+<LI><H2>Ho accesso ad un DBMS ma mi sembra difficile usarlo negli script, preferisco usare un file di testo. Che vantaggi/svantaggi ci sono?</H2>Diciamo cos&igrave;: solo svantaggi. In effetti &egrave; vero, non ha senso utilizzare un file di testo per salvare i tuoi dati nel caso tu abbia un database a tua disposizione. Anzitutto perch&egrave; i privilegi con cui gira il server web (e quindi solitamente anche gli script PHP) sono differenti rispetto a quelli delle directory dove vorrai scrivere i tuoi dati, e quindi potresti avere non poche difficolt&agrave; a leggere (ma soprattutto a scrivere!) in quelle directories.<BR><BR>
+In secondo luogo, dimenticandoci delle difficolt&agrave; appena presentate, la gestione di un file &egrave; computazionalmente pi&ugrave; pesante e pertanto i tuoi script impiegheranno lunghi tempi per essere eseguiti e fare quel che devono (i database usano strutture dati sofisticate per accedere ai dati)<BR><BR>
+E ancora, dovrai gestire il controllo della concorrenza degli accessi al file tramite la chiamata flock() che blocca un file per permetterne l'accesso esclusivo/condiviso: infatti ogni utente che sar&agrave; connesso, richiamando quegli script, generer&agrave; nuovi processi che dovranno essere in un qualche modo semaforizzati per non corrompere i dati.<BR><BR>
+Infine - dimenticando efficienza, facilit&agrave; d'uso, concorrenza e permessi - non &egrave; affatto facile immagazzinare strutture complesse su un file. Perch&egrave; reinventare la ruota, quando si pu&ograve; fare tutto con un sistema di basi di dati a cui hai accesso e che risolve gi&agrave; da solo tutti questi problemi? Il gioco vale la candela, e se non conosci l'SQL (il linguaggio per fare le query nei databases) questo &egrave; decisamente il momento migliore per imparare ad usarne uno.<BR><BR></LI>
+<LI><H2>Come faccio a togliere i tags HTML?</H2>E' un problema serio a cui bisogna sempre pensare. E' infatti possibile, per una persona che abbia la possibilit&agrave; di inserire del testo, inserire del codice HTML &quot;maligno&quot; che forzi, ad esempio, una redirezione verso una ben precisa pagina web (tanto per fare un esempio)<BR>
+Il metodo pi&ugrave; usato &egrave; quello di passare l'input dell'utente alla funzione htmlentities() che tradurr&agrave; i codici ASCII in codici HTML e permetter&agrave; pertanto una visualizzazione &quot;sicura&quot; al riparo da pericolosi trucchi.<BR>
+In questo modo il novello (ma non affatto provetto) hacker ci rimarr&agrave; piuttosto male.<BR>
+Es.<BR>
+<PRE>
+&lt;?PHP
+echo htmlentities('Questa &egrave; una prova');	/* scrive in output: Questa &amp;egrave; una prova */
+echo htmlentities('&lt;HTML&gt;');			/* scrive in output: &amp;lt;HTML&amp;gt; */
+&gt;
+</PRE></LI>
+<LI><H2>A che cosa servono le funzioni addslashes() e stripslashes()?</H2>
+Rimanendo sempre in tema di sicurezza, queste due funzioni sono una vera e propria manna dal cielo per proteggere input maligni da parte degli utenti.</H2>Supponiamo di essere nel seguente scenario: abbiamo accesso ad un DBMS dove noi immagazziniamo un testo che &egrave; stato recuperato facendo leggere al nostro script una pagina web il cui indirizzo ci &egrave; stato passato dall'utente.<BR>
+Per far ci&ograve; supponiamo di usare la seguente query:<BR>
+<PRE>INSERT INTO tabella (testo) VALUES ('$testo');</PRE>
+dove $testo &egrave; una variabile PHP che contiene il testo della pagina HTML letta.<BR>
+Se $testo contenesse la stringa<BR>
+<PRE>prova'); DELETE FROM tabella WHERE (testo LIKE '%' OR testo = ';</PRE>
+rischieremmo danni al nostro DBMS. Infatti quell'apice dopo &quot;prova&quot; chiuder&agrave; il primo apice della nostra query e potrebbe causare pertanto danni perch&eacute; la query risultante (cos&igrave; come la vedr&agrave; il PHP) sar&agrave;:<BR>
+<PRE>
+INSERT INTO tabella (testo) VALUES ('prova'); DELETE FROM tabella WHERE (testo LIKE '%' OR testo = ';');
+</PRE>
+che canceller&agrave; tutti i valori contenuti nella tabella di nome &quot;tabella&quot;<BR><BR>
+Come ovviare a questo spiacevole inconveniente? Semplicemente utilizzando la funzione addslashes() che tramuta magicamente tutte le occorrenze di ' in \' (in gergo si dice che la stringa viene &quot;escapata&quot;), evitando quindi che i problemi suddetti si presentino.<BR>
+La funzione stripslashes() esegue l'opposto.<BR><BR></LI>
+<LI><H2>Vorrei inviare un header HTTP particolare. Come faccio?</H2>Per inviare un header HTTP puoi far ricorso alla funzione header() del PHP. Ti ricordiamo che, salvo utilizzo di altre istruzioni particolari di caching dell'output, non deve ancora essere stato spedito alcun testo al client. Pertanto le chiamate header() devono essere tra le prime righe nello script. In caso contrario verr&agrave; inserito dall'interprete un warning nel tuo output<BR><BR></LI>
+<LI><H2>Vorrei controllare che non ci siano errori nei miei scripts: come faccio?</H2>Oltre a consigliarti un attento debugging, una revisione del codice a tavolino e un controllo di tutti i casi particolari e delle eccezioni che si possono verificare, ti consigliamo di utilizzare la seguente chiamata, da inserire possibilmente all'inizio dello script:<BR>
+<PRE>
+error_reporting(63);
+</PRE>
+Questa chiamata, con il parametro 63, ti permetter&agrave; di ottenere in output tutti i warnings del PHP, anche quelli meno importanti.<BR><BR></LI>
+<LI><H2>Le stringhe vanno incluse sempre tra doppi apici?</H2>No, non sempre. Ci sono due metodi per specificare una stringa in PHP: il primo &egrave; quello gi&agrave; visto ampiamente di inserire la stringa tra doppi apici, il secondo &egrave; quello di inserirla tra apici singoli.<BR>
+Nota che le due notazioni non sono sempre alternative. Infatti, mentre racchiudendo una stringa tra doppi apici otterrai una interpretazione delle variabili e dei metacaratteri (come ad esempio &quot;a capo&quot;), nel secondo caso (cio&egrave; racchiudendo una stringa tra apici singoli) le variabili eventualmente contenute al suo interno non verranno interpretate, e nemmeno i metacaratteri.<BR>
+<BR>
+Es.<BR>
+<PRE>
+&lt;?PHP
+$var = &quot;prova&quot;;
+echo &quot;faccio una $var&quot;;	/* stampa la stringa: faccio una prova */
+echo 'faccio una $var';	/* stampa la stringa: faccio una $var */
+echo &quot;\n&quot;;	/* stampa un &quot;a capo&quot; */
+echo '\n';	/* stampa la stringa: \n (infatti il metacarattere \n non viene interpretato) */
+?&gt;
+</PRE>
+E allora quale &egrave; il vantaggio di usare gli apici? Semplice, la velocit&agrave;. Se non hai stringhe da interpretare ti consigliamo vivamente di utilizzare gli apici singoli per dichiarare le tue stringhe.<BR><BR></LI>
+<LI><H2>Vorrei scrivere la data corrente, possibilmente formattata. Come faccio?</H2>E' molto semplice. Per scrivere le date usa la funzione date(). Questa funzione accetta un numero elevato di combinazioni possibili di parametri; infatti con essa puoi stampare una data nella maniera che pi&ugrave; ti aggrada, come ad esempio AAAA-MM-GG all'americana, oppure GG-MM-AAAA all'italiana, e ancora inserire una miriade di altri valori come ore, minuti, secondi, giorno della settimana, etc.<BR>
+<BR>
+Es.<BR>
+<PRE>
+&lt;?PHP
+/* stampa il numero corrente del giorno in questo anno solare, numerando con 1 il primo gennaio, etc. */
+echo &quot;Oggi e' il giorno numero &quot; . date('z') . &quot; di quest'anno\n&quot;;
+?&gt;
+</PRE>
+Per vedere tutti i possibili valori - sono veramente tanti, troppi da elencare qui - ti rimandiamo al manuale che trovi sul sito <A href="http://www.php.net/">http://www.php.net/</A> (una volta trovatolo, clicca la voce "Date and Time functions" e poi "date")
+</LI>
+</OL>
+</BODY>
+</HTML>

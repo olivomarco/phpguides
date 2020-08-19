@@ -1,0 +1,61 @@
+<HTML>
+<HEAD>
+<TITLE>Guida al PHP</TITLE>
+</HEAD>
+
+<BODY>
+<FONT face="Verdana, Arial, Helvetica, Sans Serif" size="3">
+&copy; Marco Olivo &lt;<A href="mailto:me@olivo.net">me@olivo.net</A>&gt;, luglio 2001<BR><BR>
+<!-- $Id$ -->
+<H2>FUNZIONI PER MANIPOLARE LE STRINGHE</H2>
+Vediamo ora qualche utile funzione corredata da esempi per utilizzare al meglio le stringhe all'interno dei nostri programmi.
+Il PHP, al contrario del C ad esempio, offre una visione &quot;ad alto livello&quot; di questi oggetti usati ogni giorno
+dai programmatori e pertanto non permette (escludendo bachi nell'interprete) buffer overflows e problemi simili legati alla
+gestione di stringhe come arrays (vedi il linguaggio C).
+<H3>explode()</H3>
+Questa funzione &quot;esplode&quot; una stringa dividendola in pi&ugrave; parti secondo un dato separatore. Il suo risultato &egrave; un array.<BR>
+Vediamone subito un esempio:<BR>
+<PRE>
+&lt;?PHP
+$stringa = &quot;parte1 parte2 parte3 parte4 parte5 parte6&quot;;
+$array = explode(&quot; &quot;, $stringa);
+?&gt;
+</PRE>
+<H3>htmlentities()</H3>
+Questa funzione serve per &quot;escapare&quot; i metacaratteri HTML in una data stringa. Quel che fa in pratica &egrave; sostituire ad una stringa ASCII le corrispondenti entit&agrave; HTML (ove definite)<BR>
+Risulta preziosa quando si desidera scrivere in una pagina web l'input dell'utente<BR>
+Es.<BR>
+<PRE>
+&lt;?PHP
+htmlentities(&quot;&agrave;&egrave;&igrave;&ograve;&ugrave;&quot;);
+?&gt;
+</PRE>
+restituir&agrave; in output la stringa:
+<PRE>
+&amp;agrave;&amp;egrave;&amp;igrave;&amp;ograve;&amp;ugrave;
+</PRE>
+<H3>print()</H3>
+La funzione print() &egrave; analoga alla funzione echo e, come essa, stampa a video la stringa datale in input
+<H3>substr()</H3>
+La funzione substr() ritorna una sottostringa della stringa datale in input. Senza sviscerare tutta la sintassi di questa funzione
+(relativamente complessa rispetto alle altre) diciamo che in input accetta, oltre alla stringa in esame, due interi: la posizione di
+inizio e quella di fine della sottostringa da estrarre.<BR>
+Restituisce in output la sottostringa cercata.<BR>
+Ricordiamo che l'indice della prima posizione di una stringa &egrave; 0 e non 1.<BR>
+<BR>
+Es.<BR>
+<PRE>
+&lt;?PHP
+echo substr(&quot;abcdef&quot;, 1, 3);
+?&gt;
+</PRE>
+d&agrave; in output:<BR>
+<PRE>
+bcd
+</PRE>
+<H3>trim()</H3>
+La funzione trim() ritorna la stringa datale in input senza gli spazi iniziali e finali. Utile quando si desiderano eliminare
+tali valori da un input dell'utente
+</FONT>
+</BODY>
+</HTML>

@@ -1,0 +1,41 @@
+<HTML>
+<HEAD>
+<TITLE>Guida al PHP</TITLE>
+</HEAD>
+
+<BODY>
+<FONT face="Verdana, Arial, Helvetica, Sans Serif" size="3">
+&copy; Marco Olivo &lt;<A href="mailto:me@olivo.net">me@olivo.net</A>&gt;, luglio 2001<BR><BR>
+<!-- $Id$ -->
+<H2>CAMBIARE (O SETTARE) IL DATABASE</H2>
+All'interno di un DBMS c'&egrave; spazio per più databases. Per tale ragione &egrave; molto facile che il nostro fornitore di
+connettivit&agrave;, oltre a nome utente e password ci abbia dato il nome del nostro database, sul quale potremo fare
+tutto quel che vorremo o quasi.<BR>
+Per impostare il database (o cambiarlo) si pu&ograve; utilizzare la chiamata mysql_select_db($dbname, $link) che cambia
+semplicemente il database corrente sul quale le queries avranno effetto.
+<H2>QUERY</H2>
+Solitamente una connessione viene instaurata per eseguire poi delle query alla nostra base di dati. Per tale compito
+ci viene in aiuto la funzione mysql_query($query, $link) che permette di eseguire la query $query utilizzando il
+link (gi&agrave; aperto) $link<BR>
+La query pu&ograve; essere di un qualunque tipo di quelle accettate dal DBMS, e pu&ograve; essere ovviamente parametrizzata con le nostre variabili.<BR>
+La funzione mysql_query ritorna un valore, &quot;result&quot;, che sar&agrave; molto importante in talune circostanze, come vedremo in seguito.
+Nel caso la query fallisca ritorner&agrave; un valore logico &quot;false&quot;, utile per diagnosticare eventuali problemi.
+<H2>RECUPERARE VALORI DAL DATABASE</H2>
+Spesso e volentieri sar&agrave; necessario recuperare alcuni valori dalla base di dati. Questo sar&agrave; tanto più vero quando
+avremo eseguito una SELECT sulla base di dati e vorremo vedere quali valori ci vengono riportati.<BR>
+Per fare ci&ograve; si possono utilizzare tante funzioni, ciascuna più o meno specializzata in alcuni compiti. Quella
+più utile risulta per&ograve; essere la funzione mysql_fetch_array($result) che, preso in input il &quot;result&quot; visto nel
+paragrafo prima (vi ricordate che avevamo detto che serviva?) restituisce un array contenente, componente per
+componente, la riga attuale nel database.<BR>
+Più chiamate a questa funzione restituiscono righe differenti (questo ovviamente finch&egrave; ce ne sono; quando non ce
+ne sono più restituisce &quot;false&quot;)
+<H2>MA QUANTE RIGHE CI SONO NEL RISULTATO?</H2>
+Se vogliamo stabilire quante righe ha generato la nostra SELECT possiamo utilizzare la query mysql_num_rows($result)
+(notate, una volta ancora, l'importanza di $result) che ci restituisce il numero di righe presente nel set del
+risultato
+<H2>LIBERARE I RISULTATI: UNA BUONA PRATICA</H2>
+Abbiamo gi&agrave; visto quanto sia importante, per script computazionalmente pesanti, liberare variabili PHP tramite la chiamata unset()<BR>
+In caso di set molto grossi &egrave; buona pratica utilizzare la chiamata mysql_free_result($result) dopo aver terminato il nostro lavoro su tale set.<BR>
+</FONT>
+</BODY>
+</HTML>

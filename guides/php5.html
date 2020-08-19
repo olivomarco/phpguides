@@ -1,0 +1,49 @@
+<HTML>
+<HEAD>
+<TITLE>Guida al PHP</TITLE>
+</HEAD>
+
+<BODY>
+<FONT face="Verdana, Arial, Helvetica, Sans Serif" size="3">
+&copy; Marco Olivo &lt;<A href="mailto:me@olivo.net">me@olivo.net</A>&gt;, luglio 2001<BR><BR>
+<!-- $Id$ -->
+<H1>FUNZIONI IN PHP</H1>
+Come in ogni linguaggio, anche in PHP &egrave; possibile crearsi delle proprie funzioni, utili per compiti ripetitivi o che
+possono essere visti come tali (magari con un po' di immaginazione, specializzando un po' la funzione e rendendone
+l'esecuzione sensibile al valore dei parametri)<BR>
+<BR>
+La sintassi &egrave;:<BR>
+<BR>
+<PRE>
+function nome_funzione(parametri_opzionali) {
+	corpo_della_funzione;
+}
+</PRE>
+I parametri sono opzionali e possono venire specificati o meno al momento della chiamata. In particolare suggeriamo
+di richiamare sempre le funzioni con tutti i loro parametri (onde evitare spiacevoli inconvenienti ed errori
+apparentemente inspiegabili). Se si ha la necessit&agrave; di specificare un parametro che solo ogni tanto pu&ograve; venire
+usato si pu&ograve; utilizzare la seguente notazione:<BR>
+<BR>
+Es.<BR>
+<BR>
+<PRE>
+&lt;?PHP
+function mia($a, $b, $c = &quot;ciao&quot;) {
+	/* bla bla bla */
+}
+
+mia(&quot;pippo&quot;, &quot;pluto&quot;, &quot;paperino&quot;);	/* in questo caso $a prende il valore &quot;pippo&quot;, $b &quot;pluto&quot; e $c &quot;paperino&quot; */
+mia(&quot;pippo&quot;, &quot;pluto&quot;);				/* in questo caso $a prende il valore &quot;pippo&quot;,
+                                                        $b &quot;pluto&quot; e $c &quot;ciao&quot; (valore di default) */
+?&gt;
+</PRE>
+<H1>E ORA?</H1>
+A questo punto sappiamo per sommi capi la sintassi del PHP e quindi ci possiamo addentrare alla scoperta delle funzioni
+che questo linguaggio ci offre e sviluppare qualche esempio per capire effettivamente come ci pu&ograve; venire incontro
+tale linguaggio nel nostro compito di webmasters in un mondo che ogni giorno diventa sempre più competitivo.
+Daremo per scontato che sappiate la sintassi del linguaggio HTML per lo sviluppo delle pagine web e svilupperemo
+insieme alcuni piccoli script che ci permetteranno di inserire sul nostro sito alcuni &quot;gadgets tecnologici&quot; molto
+utili.
+</FONT>
+</BODY>
+</HTML>

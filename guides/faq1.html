@@ -1,0 +1,51 @@
+<HTML>
+<HEAD>
+<TITLE>FAQ sul PHP</TITLE>
+</HEAD>
+
+<BODY>
+<FONT face="Verdana, Arial, Helvetica, Sans Serif" size="3">
+&copy; Marco Olivo &lt;<A href="mailto:me@olivo.net">me@olivo.net</A>&gt;, luglio 2001<BR><BR>
+<!-- $Id$ -->
+<OL>
+<LI><H2>Cos'&egrave; PHP?</H2>
+PHP &egrave; un linguaggio di scripting per il web. Vale a dire che tramite di esso potrai realizzare dei piccoli programmi che gireranno sul server nel momento in cui un utente acceder&agrave; a quella pagina. In questo modo potrai realizzare le cosiddette &quot;pagine dinamiche&quot;<BR><BR></LI>
+<LI><H2>PHP &egrave; simile ad ASP?</H2>
+S&igrave;, il PHP &egrave; simile ad ASP ma ovviamente la sintassi si differenzia. Non stare a sentire le voci: &quot;PHP &egrave; meglio di ASP&quot; / &quot;ASP &egrave; meglio di PHP&quot;. Ognuno ha i suoi gusti e ognuno ha le sue esigenze. Entrambi sono linguaggi sufficientemente forti e robusti per sviluppare applicazioni web di tutto rispetto.<BR><BR></LI>
+<LI><H2>Il mio server supporta PHP?</H2>
+Per vedere se il server di cui disponi supporta il linguaggio PHP crea una pagina cos&igrave;:<BR>
+<PRE>
+&lt;?PHP
+phpinfo();
+?&gt;
+</PRE>
+e uploadala sul server con estensione .php<BR>
+Se visualizzandola con il tuo browser otterrai una serie di informazioni allora vuol dire che il tuo server supporta il PHP.
+Ricordati poi di cancellarla o di proteggerne la visualizzazione con una password, altrimenti chiunque potr&agrave; accedere ad
+informazioni sul tuo server che sarebbe meglio non fornire a nessuno.<BR><BR></LI>
+<LI><H2>Come si visualizza la data?</H2>
+Ci sono molti di visualizzare una data in PHP. Uno di questi &egrave; il seguente:<BR>
+<PRE>
+&lt;?PHP
+/* visualizza una data del tipo: 31 luglio 2001 */
+echo date('H:i:s d/m/Y');
+?&gt;
+</PRE>
+</LI>
+<LI><H2>Come si visualizzano le variabili di sistema?</H2>
+Per visualizzare le variabili di sistema crea una pagina cos&igrave;:<BR>
+<PRE>
+&lt;?PHP
+phpinfo();
+?&gt;
+</PRE>
+e uploadala sul server con estensione .php<BR>
+Visualizzala con il browser ed avrai tutte le indicazioni di cui hai bisogno e che ti &egrave; dato il permesso di vedere<BR><BR></LI>
+<LI><H2>Su quale piattaforma funziona?</H2>
+PHP funziona su svariate piattaforme, dai vari ambienti Unix/Linux a macchine Windows. E' sufficiente avere il modulo appropriato installato nel webserver o sulla macchina in questione<BR><BR></LI>
+<LI><H2>Il PHP pu&ograve; essere usato con i database Access?</H2>
+Certamente. Il PHP supporta nativamente l'accesso a moltissimi sistemi di database (DBMS).
+Per vedere le funzioni specifiche ai vari DBMS supportati guarda sul manuale del PHP che trovi sul sito all'indirizzo <A href="http://www.php.net/">http://www.php.net/</A><BR><BR></LI>
+</OL>
+</BODY>
+</HTML>

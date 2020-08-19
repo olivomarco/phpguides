@@ -1,0 +1,135 @@
+<HTML>
+<HEAD>
+<TITLE>Guida al PHP</TITLE>
+</HEAD>
+
+<BODY>
+<FONT face="Verdana, Arial, Helvetica, Sans Serif" size="3">
+&copy; Marco Olivo &lt;<A href="mailto:me@olivo.net">me@olivo.net</A>&gt;, luglio 2001<BR><BR>
+<!-- $Id$ -->
+<H1>ESEMPI UTILI PER APPROFONDIRE</H1>
+In questa sezione presenteremo qualche esempio semplice che pu&ograve; tornare utile nella vita di ogni webmaster quando
+deve realizzare una nuova sezione dinamica per un sito. Questi esempi, volutamente non complicati, hanno lo scopo
+di chiarire ulteriormente le idee e presentare un approccio utile alla risoluzione di compiti comuni.
+<H2>SPEDIRE UNA MAIL</H2>
+Capita spesso che l'unico modo offerto per spedire il proprio feedback ad un dato sito sia scrivere una mail tramite
+il classico programma di posta. Tuttavia, per fornire una visione più professionale del nostro servizio (specie se &egrave;
+un servizio a pagamento) risulta utile realizzare una piccola interfaccia customer-care che permetta all'utente di
+mandarci le sue impressioni senza per questo dover uscire dal programma che sta attualmente utilizzando - vale a dire
+il browser.
+Questo esempio illustra come realizzare un piccolo form in HTML senza fronzoli inutili adatto allo scopo. Il codice &egrave;
+ben commentato e dovrebbe chiarire il senso del programma:<BR>
+<BR>
+Es.<BR>
+<BR>
+<PRE>
+&lt;HTML&gt;
+&lt;HEAD&gt;
+&lt;TITLE&gt;Contattaci&lt;/TITLE&gt;
+&lt;/HEAD&gt;
+&lt;BODY&gt;
+&lt;?PHP
+/* $chi, $autore e $msg vengono settate se si &egrave; cliccato sul pulsante &quot;invia&quot; del form; questo accade
+per tutte le variabili inserite all'interno di un form: esse prendono il nome che avevano nel controllo del form.
+La cosa interessante e' che questa sezione sara' saltata completamente la prima volta che questo file verra' caricato,
+in quanto le variabili $chi, $autore e $msg non saranno ancora state inizializzate. Questo e' utile per mandare in
+output il solo codice HTML del form */
+if (isset($chi) && isset($autore) && isset($msg)) {
+	/* discriminiamo a seconda del valore di $chi e spediamo una mail a chi appropriato */
+	if ($chi == &quot;vendite&quot;) {
+		/* parametri della funzione mail(): a chi, titolo, testo, headers addizionali (vedi RFC822) */
+		mail(&quot;vendite@sito.com&quot;, &quot;mail dal web&quot;, &quot;$msg&quot;, &quot;From: $autore&quot;);
+	}
+	else {
+		mail(&quot;tecnici@sito.com&quot;, &quot;mail dal web&quot;, &quot;$msg&quot;, &quot;From: $autore&quot;);
+	}
+
+	/* manda in output un ringraziamento che verra' inserito prima del codice del form */
+	echo &quot;Mail spedita. Grazie!&lt;BR&gt;&lt;BR&gt;\n&quot;;
+}
+/* qui si conclude una parte del codice PHP. Quel che segue e' codice HTML, salvo la sezione introdotta dagli opportuni
+tag e che contiene un solo comando: echo $PHP_SELF;
+$PHP_SELF e' una variabile automatica (cioe' generata dal PHP in maniera automatica) che contiene semplicemente il
+nome (piu' l'eventuale percorso) dello script corrente. In questo modo indichiamo al browser dell'utente dove deve
+venir spedito il contenuto del form dopo che l'utente ha cliccato su &quot;invia&quot; */
+?&gt;
+&lt;FORM action=&quot;&lt;?PHP echo $PHP_SELF; ?&gt;&quot; method=&quot;post&quot;&gt;
+&lt;INPUT type=&quot;text&quot; name=&quot;autore&quot; value=&quot;tua@email&quot;&gt;
+&lt;SELECT name=&quot;chi&quot;&gt;
+&lt;OPTION value=&quot;vendite&quot;&gt;ufficio vendite&lt;/OPTION&gt;
+&lt;OPTION value=&quot;tecnici&quot;&gt;ufficio tecnico&lt;/OPTION&gt;
+&lt;/SELECT&gt;
+&lt;TEXTAREA name=&quot;msg&quot; rows=&quot;10&quot; cols=&quot;50&quot;&gt;messaggio&lt;/TEXTAREA&gt;
+&lt;INPUT type=&quot;submit&quot; value=&quot;invia&quot;&gt;
+&lt;/FORM&gt;
+&lt;/BODY&gt;
+&lt;/HTML&gt;
+</PRE>
+<H2>REALIZZARE UN SEMPLICE GUESTBOOK</H2>
+In questo esempio vedremo invece come interfacciarci ad un database (MySQL nel nostro caso) per realizzare una piccola
+applicazione di guestbook nella quale gli utenti possano inserire i loro commenti sul nostro sito web. Ancora una volta
+non sar&agrave; il codice HTML ad essere approfondito, ma solamente il codice PHP.<BR>
+Useremo ci&ograve; che abbiamo imparato nella sezione dedicata ai databases per instaurare la connessione ed eseguire le
+queries appropriate, rilasciando la connessione quando non più utile.
+Ecco l'esempio, come al solito ben commentato:<BR>
+<BR>
+Es.<BR>
+<BR>
+<PRE>
+&lt;HTML&gt;
+&lt;HEAD&gt;
+&lt;TITLE&gt;Guestbook&lt;/TITLE&gt;
+&lt;/HEAD&gt;
+&lt;BODY&gt;
+&lt;?PHP
+/* Come nell'altro esempio (infatti questo guestbook e' molto simile alla spedizione della mail) la sezione che
+segue verra' valutata solamente dopo che l'utente avra' cliccato sul pulsante &quot;invia&quot;, quindi almeno al secondo
+caricamento di questo script */
+if (isset($autore) && isset($msg)) {
+	/* instaura una connessione al DBMS e seleziona il database corrente */
+	$link = mysql_connect(&quot;localhost&quot;, &quot;utente_database&quot;, &quot;segreto&quot;);
+	mysql_select_db(&quot;database&quot;, $link);
+
+	/* inserisce il commento e l'email di chi l'ha scritto nel guestbook */
+	mysql_query(&quot;INSERT INTO guestbook (autore, msg) VALUES ('$autore', '$msg')&quot;, $link);
+
+	/* manda in output un ringraziamento che verra' inserito prima del codice del form */
+	echo &quot;Commento inserito. Grazie!&lt;BR&gt;&lt;BR&gt;\n&quot;;
+}
+/* qui si conclude una parte del codice PHP. Quel che segue e' codice HTML, salvo la sezione introdotta dagli opportuni
+tag e che contiene un solo comando: echo $PHP_SELF;
+$PHP_SELF e' una variabile automatica (cioe' generata dal PHP in maniera automatica) che contiene semplicemente il
+nome (piu' l'eventuale percorso) dello script corrente. In questo modo indichiamo al browser dell'utente dove deve
+venir spedito il contenuto del form dopo che l'utente ha cliccato su &quot;invia&quot; */
+?&gt;
+&lt;FORM action=&quot;&lt;?PHP echo $PHP_SELF; ?&gt;&quot; method=&quot;post&quot;&gt;
+&lt;INPUT type=&quot;text&quot; name=&quot;autore&quot; value=&quot;tua@email&quot;&gt;
+&lt;TEXTAREA name=&quot;msg&quot; rows=&quot;10&quot; cols=&quot;50&quot;&gt;messaggio&lt;/TEXTAREA&gt;
+&lt;INPUT type=&quot;submit&quot; value=&quot;invia&quot;&gt;
+&lt;/FORM&gt;
+Commenti gi&agrave; inseriti:&lt;BR&gt;
+&lt;?PHP
+/* qui inseriamo ora tutti i commenti giunti finora. Vale la pena di spiegare l'utilizzo della funzione htmlentities():
+questa funzione traduce semplicemente i caratteri di un testo ASCII che non possono essere scritti &quot;cos&igrave; come sono&quot;
+in un file HTML, trasformandoli in entit&agrave;. Vale a dire che, ad esempio, il carattere &quot;&agrave;&quot; verra' tradotto nella stringa
+&quot;&amp;agrave;&quot; e cosi' via */
+
+$result = mysql_query(&quot;SELECT * FROM guestbook&quot;, $link);
+
+/* esegue un ciclo while che permette di recuperare tutte le righe, cioe' tutti i commenti; mette in particolare la
+riga corrente nell'array $row */
+while ($row = mysql_fetch_array($result)) {
+	/* stampa i valori trovati, facendo cura di utilizzare la funzione htmlentities() introdotta sopra */
+	echo &quot;&lt;B&gt;&lt;A href=\&quot;mailto:&quot; . htmlentities($row[&quot;autore&quot;]) .
+	&quot;\&quot;&gt;&quot; . htmlentities($row[&quot;autore&quot;]) . &quot;&lt;/A&gt;&lt;/B&gt;: &quot; . htmlentitites($row[&quot;msg&quot;]) . &quot;&lt;BR&gt;\n&quot;;
+}
+
+/* rilascia la connessione al DBMS */
+mysql_close($link);
+?&gt;
+&lt;/BODY&gt;
+&lt;/HTML&gt;
+</PRE>
+</FONT>
+</BODY>
+</HTML>

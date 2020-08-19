@@ -1,0 +1,36 @@
+<HTML>
+<HEAD>
+<TITLE>Guida al PHP</TITLE>
+</HEAD>
+
+<BODY>
+<FONT face="Verdana, Arial, Helvetica, Sans Serif" size="3">
+&copy; Marco Olivo &lt;<A href="mailto:me@olivo.net">me@olivo.net</A>&gt;, luglio 2001<BR><BR>
+<!-- $Id$ -->
+<H1>COOKIES</H1>
+In PHP &egrave; naturalmente possibile gestire i cookies, informazioni salvate sulla macchina dell'utente dal sito web che si sta visitando per uso futuro. Non ci addentreremo in problematiche di privacy e neppure in una descrizione di cosa sono i cookies e come funzionano: per questo vi rimandiamo alle guide in rete e in particolare all'indirizzo <A href="http://www.cookiecentral.com/">http://www.cookiecentral.com/</A><BR>
+<BR>
+Il PHP mette a disposizione dello sviluppatore una utile funzione, setcookie(), che permette di fare tutto quel che si pu&ograve; fare con i cookies: settarne uno oppure cancellarlo.<BR>
+Per accedere ad un cookie nella maggior parte delle installazioni &egrave; sufficiente utilizzare il nome del cookie preceduto dal simbolo di dollaro, esattamente come se fosse una variabile passata allo script (ed in effetti &egrave; proprio cos&igrave;)<BR>
+La funzione setcookie() dispone di ben 6 campi ma nella maggior parte degli utilizzi sar&agrave; sufficiente specificare i primi 3.<BR>
+La sintassi &egrave;:<BR>
+<PRE>
+int setcookie(string name, string value, int expire, string path, string domain, int secure);
+</PRE>
+Anzitutto va notato che prima di spedire un cookie &egrave; necessario non aver scritto nulla in output, pena un messaggio di warning da parte del PHP. Infatti, secondo il protocollo HTTP, i cookies devono essere passati negli headers della pagina.<BR>
+Per cancellare un cookie sar&agrave; sufficiente richiamare la funzione setcookie() passandole solamente il primo argomento, e cio&egrave; il nome del cookie da cancellare dal browser dell'utente.<BR>
+Per spedire invece un cookie ci sono vari modi:<BR>
+<PRE>
+&lt;?PHP
+setcookie(&quot;testcookie&quot;, &quot;valore&quot;);			/* imposta il cookie nella maniera piu' semplice possibile */
+setcookie(&quot;testcookie&quot;, &quot;valore&quot;, time() + 3600);	/* &quot;spira in&quot; 1 ora */
+setcookie(&quot;testcookie&quot;, &quot;valore&quot;, time() + 3600, &quot;/&quot;);	/* &quot;spira&quot; in 1 ora e lo imposta come leggibile da tutte le pagine
+							del sito (il suo path viene impostato sulla root del webserver) */
+echo $testcookie;					/* stampa il valore del cookie $testcookie */
+?&gt;
+</PRE>
+Per maggior informazioni sui cookies vi rimandiamo in rete ai siti gi&agrave; citati o all'indirizzo <A href="http://www.netscape.com/newsref/std/cookie_spec.html">http://www.netscape.com/newsref/std/cookie_spec.html</A><BR>
+<BR>
+</FONT>
+</BODY>
+</HTML>

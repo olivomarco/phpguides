@@ -1,0 +1,47 @@
+<HTML>
+<HEAD>
+<TITLE>Guida al PHP</TITLE>
+</HEAD>
+
+<BODY>
+<FONT face="Verdana, Arial, Helvetica, Sans Serif" size="3">
+&copy; Marco Olivo &lt;<A href="mailto:me@olivo.net">me@olivo.net</A>&gt;, luglio 2001<BR><BR>
+<!-- $Id$ -->
+<H1>DATABASES</H1>
+Dopo aver visto alcune utili funzioni che ci permetteranno di essere più flessibili nella scrittura dei nostri scripts,
+vediamo finalmente come ci possiamo interfacciare ad un database tramite il PHP, ragione per la quale il PHP &egrave; cos&igrave;
+tanto amato ed utilizzato.<BR>
+Il PHP dispone di un supporto eccezionale verso la maggior parte dei DBMS (database management system) commerciali e
+non e permette di interfacciarsi ad essi in maniera semplice e - soprattutto - parametrizzabile.
+Questo significa che potremo (anzi: da buoni programmatori dovremo!) scrivere una serie di funzioni utili per la nostra
+applicazione, inserirle in una classe (probabile argomento futuro) o in un file ad hoc ed utilizzare questi nuovi
+prototipi per scrivere il nostro codice. Questo ci permetter&agrave; di dover cambiare solo quelle funzioni che si
+interfacciano al database  un giorno che dovessimo per una qualunque ragione cambiare il nostro DBMS in backend,
+risparmiandoci bachi nel codice, tempo e fatica, e quindi soldi.<BR><BR>
+In questa panoramica utilizzeremo le chiamate a MySQL, diffusissimo DBMS noto per la sua leggerezza e velocit&agrave;. Tale
+DBMS non &egrave; adatto ad ogni tipo di applicazioni, anzi &egrave; molto ristretto (e proprio per questo veloce), ma ben si
+adatta ai compiti normalmente svolti e svolgibili su web.
+I più svezzati tra voi si scordino triggers, stored procedures e subselects. Con MySQL sono un lontano ricordo: un
+prezzo da pagare per la velocit&agrave; offerta rispetto agli altri DBMS.
+<H2>CONNESSIONE E DISCONNESSIONE DA UN DATABASE</H2>
+Come per i files, anche per i databases &egrave; necessario instaurare una connessione al DBMS e, per fare i &quot;programmatori puliti&quot; in perfetto stile UNIX, rilasciarla quando essa non risulta più necessaria.<BR>
+Una premessa &egrave; per&ograve; necessaria: dal momento che in un DBMS possono essere immagazzinati dati di varia natura e
+provenienti magari da diversi dipartimenti (nel caso di un'azienda) o da diversi utenti (tipico nel mondo del
+webhosting) &egrave; necessario che vi sia un metodo basato sull'autentifica degli utenti in base a credenziali (nome utenti
+e password principalmente, ma anche nome di host)<BR>
+Senza scendere troppo nei dettagli vi ricordiamo soltanto che sar&agrave; necessario avere il nome utente e la password
+prima di potersi collegare ad un database.<BR>
+<BR>
+$link = mysql_connect($host, $user, $pass); &egrave; la chiamata per instaurare una connessione (non persistente) ad un DBMS. Questa
+funzione, analogamente alla chiamata fopen() vista in un articolo precedente, ritorna un descrittore, qui chiamato
+&quot;link&quot; che identifica la connessione.
+Dopo aver fatto le nostre query e le nostre transazioni tramite le chiamate che vedremo successivamente utilizzeremo
+la chiamata mysql_close($link); per liberare le risorse e chiudere correttamente la nostra connessione.<BR>
+<BR>
+Questo non &egrave; l'unico modo per instaurare una connessione con MySQL, n&egrave; necessariamente il più performante. Tuttavia
+pu&ograve; essere a volta l'unico metodo funzionante (dipende essenzialmente dalla configurazione del server) e quindi
+sar&agrave; l'unico illustrato. Chi &egrave; interessato pu&ograve; provare a cercare sulla Reference Guide del PHP la funzione
+&quot;mysql_pconnect&quot;
+</FONT>
+</BODY>
+</HTML>

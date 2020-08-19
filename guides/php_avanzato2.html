@@ -1,0 +1,51 @@
+<HTML>
+<HEAD>
+<TITLE>Guida al PHP</TITLE>
+</HEAD>
+
+<BODY>
+<FONT face="Verdana, Arial, Helvetica, Sans Serif" size="3">
+&copy; Marco Olivo &lt;<A href="mailto:me@olivo.net">me@olivo.net</A>&gt;, luglio 2001<BR><BR>
+<!-- $Id$ -->
+<H1>REGULAR EXPRESSIONs (REGEXPs)</H1>
+Le regular expressions (in italiano: espressioni regolari) sono un utilissimo strumento per tutti coloro che si trovano a manipolare del testo &quot;pi&ugrave; o meno&quot; formattato proveniente da certe sorgenti.<BR>
+Facciamo un esempio: un file HTML &egrave; un tipico esempio di testo formattato in quanto i files scritti in questo linguaggio devono essere sintatticamente corretti (in realt&agrave; questo non &egrave; verissimo per l'HTML, ma assumeremo per semplicit&agrave; che sia cos&igrave;)<BR>
+Supponiamo di avere una lista di URLs che dobbiamo leggere e dalle quali dobbiamo estrapolare, ad esempio, tutti i tags &lt;TITLE&gt; (uno per file)<BR>
+Come fare? La prima parte &egrave; semplice: sar&agrave; sufficiente ciclare sulla lista (magari contenuta in un array, oppure richiesta ad un database) e aprire una connessione tramite la funzione fopen() verso la pagina desiderata e quindi leggere il testo con la funzione fgets() salvando tutto in un file.<BR>
+Difficolt&agrave; maggiori si avranno nell'estrapolare invece i tags richiesti, in quanto la loro posizione non &egrave; nota a priori ed inoltre possono essere presenti in varia forma (ci possono essere degli &quot;a capo&quot;, oppure degli spazi, etc.)<BR>
+Come fare allora? Semplice, tramite le regexp!<BR>
+Le regexp hanno infatti la capacit&agrave; di adattarsi perfettamente al testo e permettono di specificare precisi patterns di ricerca (anche condizionali, cio&egrave; basati sul quello che si &egrave; gi&agrave; letto)<BR>
+Il PHP supporta due tipi differenti di regexp: quelle &quot;native&quot; del linguaggio (che andremo a vedere: POSIX extended regular expressions) e quelle &quot;Perl-like&quot;, pi&ugrave; flessibili ma anche pi&ugrave; complicate.<BR>
+Tra le funzioni per manipolare le regexp ne segnaliamo due: eregi() ed eregi_replace() che rispettivamente cercano un testo (case insensitive) e che cercano e sostituiscono un testo (sempre case insensitive)<BR>
+Come in tutte le regexp anche in quelle del PHP ci sono dei metacaratteri che significano qualcosa per l'interprete. Tra di essi citiamo:<BR>
+<PRE>
+$ indica la fine della stringa
+^ indica l'inizio della stringa, a meno che non sia inserita in [] (in questo caso indica la negazione dei caratteri
+  ivi presenti)
+| indica una possibile scelta (OR)
+[] racchiude una sequenza di caratteri
+</PRE>
+Es.<BR>
+<PRE>
+&lt;?PHP
+ereg(&quot;abc&quot;, $stringa);	/* ritorna &quot;vero&quot; se la stringa abc &egrave; presente in $stringa */
+ereg(&quot;^abc&quot;, $stringa);	/* ritorna &quot;vero&quot; se la stringa abc &egrave; presente all'inizio di $stringa */
+ereg(&quot;abc$&quot;, $stringa);	/* ritorna &quot;vero&quot; se la stringa abc &egrave; presente alla fine di $stringa */
+eregi(&quot;(ozilla.[23]|MSIE.3)&quot;, getenv(&quot;HTTP_USER_AGENT&quot;));
+/* ritorna &quot;vero&quot; se il browser e' Netscape 2 o 3 oppure Internet Explorer 3 */
+?&gt;
+</PRE>
+Nel caso si voglia invece cercare del testo per modificarlo allora sar&agrave; necessario utilizzare l'altra funzione vista, che ha una sintassi molto intuitiva come si vede da questi esempi:<BR>
+<PRE>
+&lt;?PHP
+$string = ereg_replace(&quot;^&quot;, &quot;&lt;BR&gt;&quot;, $stringa);
+/* inserisce un &lt;BR&gt; all'inizio di $stringa */
+ $string = ereg_replace(&quot;$&quot;, &quot;&lt;BR&gt;&quot;, $string);
+/* inserisce un &lt;BR&gt; alla fine di $stringa */
+$string = ereg_replace(&quot;\n&quot;, &quot;&quot;, $string);
+/* sostituisce tutte le occorrenze del carattere \n con un carattere nullo (cioe' li elimina) */
+?&gt;
+</PRE>
+</FONT>
+</BODY>
+</HTML>

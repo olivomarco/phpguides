@@ -1,0 +1,49 @@
+<HTML>
+<HEAD>
+<TITLE>Guida al PHP</TITLE>
+</HEAD>
+
+<BODY>
+<FONT face="Verdana, Arial, Helvetica, Sans Serif" size="3">
+&copy; Marco Olivo &lt;<A href="mailto:me@olivo.net">me@olivo.net</A>&gt;, luglio 2001<BR><BR>
+<!-- $Id$ -->
+<H1>LE VARIABILI</H1>
+In PHP le variabili non devono necessariamente essere dichiarate a priori e sono atipizzate. Questo significa che una
+variabile pu&ograve; contenere un intero, una stringa, un floating point o un valore booleano durante la sua esecuzione senza
+aver bisogno di essere ridichiarata ogni volta. La cosa curiosa &egrave; che persino un array pu&ograve; essere un mix di variabili di tipo diverso.<BR>
+Le variabili in PHP si distinguono perch&egrave; incominciano con il simbolo di dollaro (&quot;$&quot;)
+Gli assegnamenti sono contraddistinti dal simbolo di &quot;=&quot;, come in C e Perl, mentre i simboli per i confronti sono:<BR>
+<BR>
+<PRE>
+&lt;   minore di
+&gt;   maggiore di
+&lt;=  minore o uguale a
+&gt;=  maggiore o uguale a
+!=  diverso da
+</PRE>
+Alcune utili funzioni legate alle variabili sono:
+<UL>
+<LI>isset($variabile): restituisce &quot;true&quot; se la variabile $variabile &egrave; stata settata, false altrimenti</LI>
+<LI>unset($variabile): &quot;de-setta&quot; la variabile $variabile, rendendola cos&igrave; di nuovo libera (utile per scripts computazionalmente pesanti)</LI>
+</UL>
+Es.<BR>
+<BR>
+<PRE>
+&lt;?PHP
+$i = 3;			/* assegna ad $i il valore 3 */
+echo $i;		/* stampa &quot;3&quot; */
+$i = &quot;casa&quot;;	/* adesso assegna ad $i il valore &quot;casa&quot; (vedi sopra: atipizzazione delle variabili) */
+echo $i;		/* stampa &quot;casa&quot; */
+
+echo isset($i);	/* stampa &quot;true&quot;: la variabile $i &egrave; settata */
+unset($i);		/* la variabile $i adesso viene &quot;de-settata&quot; */
+echo isset($i);	/* stampa &quot;false&quot;: la variabile $i non &egrave; più settata */
+?&gt;
+</PRE>
+<BR>
+Gli array, che possono essere a più dimensioni, sono indicati nella forma:<BR><BR>
+$array<BR><BR>
+come tutte le altre variabili. Per accedere al contenuto della $i-esima variabile dell'array si avr&agrave; una istruzione del tipo $array[$i - 1] (gli indici dell'array partono da 0 come in C)
+</FONT>
+</BODY>
+</HTML>

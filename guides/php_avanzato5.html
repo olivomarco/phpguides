@@ -1,0 +1,21 @@
+<HTML>
+<HEAD>
+<TITLE>Guida al PHP</TITLE>
+</HEAD>
+
+<BODY>
+<FONT face="Verdana, Arial, Helvetica, Sans Serif" size="3">
+&copy; Marco Olivo &lt;<A href="mailto:me@olivo.net">me@olivo.net</A>&gt;, luglio 2001<BR><BR>
+<!-- $Id$ -->
+<H1>MySQL PERSISTENT CONNECTIONS</H1>
+In PHP come abbiamo gi&agrave; visto &egrave; presente il supporto nativo per il DBMS MySQL, database ampiamente utilizzato in rete in quanto molto veloce anche se povero di funzionalit&agrave; che risultano per&ograve; superflue in un contesto di applicazione web (questo, almeno, nella maggioranza dei casi)<BR><BR>
+In PHP non &egrave; possibile solamente collegarsi a MySQL ogni volta tramite una connessione creata ad hoc, ma &egrave; anche possibile cercare di riutilizzare una connessione instaurata in precedenza, il tutto al fine di velocizzare gli accessi riducendo l'overhead richiesto per la connessione (che ricordiamo ai pi&ugrave; svezzati essere una connessione tramite socket TCP e che pertanto richiede il three-way handshake con tutto il conseguente carico)<BR>
+Per sfruttare le connessioni persistenti sar&agrave; sufficiente:<BR>
+<UL>
+<LI>sostituire nel codice le chiamate mysql_connect() con la chiamata mysql_pconnect() con eguale sintassi per quel che riguarda i parametri</LI>
+<LI>rimuovere le chiamate mysql_close() in quanto le connessioni dovranno rimanere aperte</LI>
+</UL>
+Fatto questo il sistema sfrutter&agrave; appieno la funzionalit&agrave; di connessioni persistenti, ammesso che il sistema in uso sia configurato per farlo (alle volte potrebbero verificarsi errori apparentemente inspiegabili se si usano, anche se &egrave; abbastanza raro; in tal caso sar&agrave; necessario tornare alle vecchie connessioni &quot;usa e getta&quot;)<BR>
+</FONT>
+</BODY>
+</HTML>

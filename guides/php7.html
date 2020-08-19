@@ -1,0 +1,69 @@
+<HTML>
+<HEAD>
+<TITLE>Guida al PHP</TITLE>
+</HEAD>
+
+<BODY>
+<FONT face="Verdana, Arial, Helvetica, Sans Serif" size="3">
+&copy; Marco Olivo &lt;<A href="mailto:me@olivo.net">me@olivo.net</A>&gt;, luglio 2001<BR><BR>
+<!-- $Id$ -->
+<H2>FILESYSTEM</H2>
+Introduciamo ora qualche funzione che ci pu&ograve; venire in aiuto quando dobbiamo manipolare files presenti sul nostro spazio web oppure vogliamo recuperare files da remoto.<BR>
+Il PHP, rispetto ad altri linguaggi, permette infatti con una singola chiamata non solo di recuperare (e quindi poter
+leggere/scrivere) un file locale, ma anche di recuperare un file che sia su un altro spazio web oppure su un server
+FTP in maniera trasparente, vale a dire senza dover utilizzare altre chiamate.
+<H3>fopen()</H3>
+Anzitutto, prima di poter leggere o scrivere un file &egrave; necessario aprirlo. Questa funzione, che accetta due parametri di input (il nome del file e il tipo di operazione - lettura/scrittura/append e altre combinazioni) ritorna il descrittore del file, descrittore che utilizzeremo per fare le altre successive operazioni.<BR>
+Questa funzione, come gi&agrave; anticipato, permette di aprire anche un file remoto messo su uno spazio web (e quindi
+recuperabile tramite il protocollo HTTP) o su server FTP; tutto questo permanendo identica la sintassi: la funzione
+si comporter&agrave; diversamente a seconda del nome di file passatole (se inizier&agrave; con http:// tenter&agrave; di recuperare il file dal webserver remoto; se inizier&agrave; per ftp:// tenter&agrave; di prenderlo dal server FTP remoto; altrimenti lo considerer&agrave; come un file locale).<BR>
+<BR>
+Le modalit&agrave; di apertura di un file sono le seguenti:<BR>
+<UL>
+<LI>'r' - apre il file per la sola lettura e sistema la &quot;testina&quot; di lettura all'inizio del file</LI>
+<LI>'r+' - apre il file per lettura/scrittura, posizionando la testina all'inizio del file</LI>
+<LI>'w' - apre il file per la scrittura, troncandone il contenuto se esiste; se non esiste tenta di crearlo; mette la testina all'inizio</LI>
+<LI>'w+' - idem come 'w', ma lo apre per la lettura/scrittura</LI>
+<LI>'a' - apre il file per la sola scrittura, mettendo per&ograve; la testina a fine file</LI>
+<LI>'a+' - come sopra, ma lo apre per la lettura/scrittura</LI>
+</UL>
+Es.<BR>
+<PRE>
+$fp = fopen(&quot;/home/marco/file.txt&quot;, &quot;r&quot;);
+$fp = fopen(&quot;http://www.sito.com/&quot;, &quot;r&quot;);
+$fp = fopen(&quot;ftp://user:password@sito.com/&quot;, &quot;w&quot;);
+</PRE>
+$fp &egrave; quello che viene chiamato &quot;file handle&quot; o, in italiano, &quot;descrittore di file&quot;
+<H3>fgets()</H3>
+Questa chiamata permette di leggere da un file aperto un certo numero di caratteri specificati. Tale funzione ha
+la particolarit&agrave; di terminare prima di aver letto i caratteri specificati se incontra un newline (o un &quot;fine file&quot;)<BR>Utile per la lettura di linee singole da un file
+<H3>fputs()</H3>
+Opposto della funzione fgets(), questa chiamata permette di scrivere in un file una data stringa. La posizione
+nella quale tale stringa verr&agrave; scritta dipende solamente dalla posizione corrente della testina di scrittura.
+<H3>fseek()</H3>
+Questa funzione permette di spostare la testina di lettura/scrittura del file corrente in una certa posizione. Accetta
+in input due parametri: il descrittore di file e la posizione.<BR>
+Notare che non funziona su files remoti (http:// o ftp://) ma solo su files locali
+<H3>fclose()</H3>
+Chiude il descrittore di file passatole<BR><BR>
+Il seguente esempio esegue una copia di un file in un altro (esempio puramente didattico: in PHP esiste la funzione
+copy() che esegue la copia di due files):<BR>
+<BR>
+Es.<BR>
+<BR>
+<PRE>
+&lt;?PHP
+$fp1 = fopen('leggi.txt', 'r');
+$fp2 = fopen('scrivi.txt', 'w');
+
+while ($buf = fgets($fp1, 4096)) {
+	fputs($fp2, $buf);
+}
+
+fclose($fp1);
+fclose($fp2);
+?&gt;
+</PRE>
+</FONT>
+</BODY>
+</HTML>

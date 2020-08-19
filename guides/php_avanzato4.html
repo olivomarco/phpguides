@@ -1,0 +1,37 @@
+<HTML>
+<HEAD>
+<TITLE>Guida al PHP</TITLE>
+</HEAD>
+
+<BODY>
+<FONT face="Verdana, Arial, Helvetica, Sans Serif" size="3">
+&copy; Marco Olivo &lt;<A href="mailto:me@olivo.net">me@olivo.net</A>&gt;, luglio 2001<BR><BR>
+<!-- $Id$ -->
+<H1>SOCKETS</H1>
+Il PHP fornisce il supporto per le sockets TCP e di dominio Unix. Tratteremo qui il primo tipo, essendo maggiormente utile.<BR>
+Tramite le sockets, come il lettore di questa guida sapr&agrave;, &egrave; possibile instaurare una connessione ad un host remoto tramite la rete. Le sockets TCP in particolare garantiscono la correttezza dello stream di dati, eliminando problemi derivanti da duplicati e pacchetti persi.<BR><BR>
+Tramite il PHP risulta pertanto facile realizzare un client di un qualunque servizio TCP di rete che si collega ai vari hosts ed esegue alcune procedure. In rete si trovano migliaia di esempi, uno dei quali &egrave; quello di controllare la correttezza dell'indirizzo email inserito dall'utente.<BR><BR>
+Un modo molto semplice per capire come funzionano le sockets risulta quello di creare un piccolo client HTTP che richiede una pagina ad un host e la mostra a video. Per far ci&ograve; sarebbe possibile, come abbiamo gi&agrave; visto, utilizzare la funzione fopen() con il nome dell'URL da recuperare ma andremo qui ad illustrare l'altro approccio possibile basato su sockets, decisamente pi&ugrave; flessibile. Il codice &egrave; ben commentato e non necessita pertanto di ulteriori spiegazioni. L'esempio &egrave; stato recuperato dal &quot;PHP manual&quot; e leggermente modificato:<BR>
+<PRE>
+&lt;?PHP<BR>
+/* apre una connessione verso www.php.net, porta 80 */
+$fp = fsockopen(&quot;www.php.net&quot;, 80);
+/* se $fp non e' un file descriptor valido esce */
+if(!$fp) {
+	exit();
+}
+else {
+	/* scrive sulla socket la richiesta HTTP (vedi RFC relativa) */
+	fputs($fp,&quot;GET / HTTP/1.0\n\n&quot;);
+	/* legge ora i dati indietro dalla socket fintantoche' non e' finito lo stream di dati */
+	while(!feof($fp)) {
+		/* scrive in output cio' che legge mano a mano che lo fa */
+		echo fgets($fp, 128);
+	}
+	fclose($fp);
+}
+?&gt;
+</PRE>
+</FONT>
+</BODY>
+</HTML>

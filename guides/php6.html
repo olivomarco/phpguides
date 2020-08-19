@@ -1,0 +1,55 @@
+<HTML>
+<HEAD>
+<TITLE>Guida al PHP</TITLE>
+</HEAD>
+
+<BODY>
+<FONT face="Verdana, Arial, Helvetica, Sans Serif" size="3">
+&copy; Marco Olivo &lt;<A href="mailto:me@olivo.net">me@olivo.net</A>&gt;, luglio 2001<BR><BR>
+<!-- $Id$ -->
+<H1>FUNZIONI UTILI</H1>
+Vediamo nei capitoli che seguono varie funzioni utili del PHP, raggruppate in base al loro scopo.
+<H2>ARRAY</H2>
+Iniziamo a vedere alcuni esempi che richiamano funzioni built-in del PHP e che sono molto utili per manipolare gli array.<BR>
+Gli array sono molto importanti negli script che girano in un webserver in quanto quasi tutte le variabili d'ambiente disponibili a tali script vengono passate in degli arrays.<BR>
+In particolare ricordiamo, rimandando ad altrove per una spiegazione più esauriente riguardo ai webservers, le
+seguenti nozioni:
+<UL>
+<LI>HTTP_GET_VARS: variabili passate ad uno script dal webserver dopo una &quot;GET&quot;</LI>
+<LI>HTTP_POST_VARS: variabili passate ad uno script dal webserver dopo una &quot;POST&quot;</LI>
+<LI>HTTP_COOKIE_VARS: variabili passate ad uno script dal webserver e che contengono i cookies salvati dal browser dell'utente e validi per quella pagina</LI>
+</UL>
+<H3>each()</H3>
+La funzione each() ritorna la coppia nome/valore della prossima variabile contenuta nell'array. Bisogna ricordare che
+l'attraversamento di un array in PHP &egrave; sequenziale, cio&egrave; partendo dalla prima componente un indice &quot;immaginario&quot; viene spostato verso destra ogni volta che viene eseguita una chiamata a questa funzione.
+<H3>reset()</H3>
+Riporta l'indice &quot;immaginario&quot; (introdotto sopra) alla prima posizione nell'array, permettendo dunque un nuovo ciclo all'interno dell'array
+<H3>next()</H3>
+Sposta l'indice nell'array di una posizione in avanti
+<H3>prev()</H3>
+Sposta l'indice nell'array di una posizione all'indietro
+<H3>sizeof()</H3>
+La funzione sizeof() permette di determinare le dimensioni di un array (cio&egrave; il numero di elementi contenuti al suo interno).<BR>
+Tenendo conto che gli array in PHP sono &quot;zero-based&quot; (cio&egrave; la numerazione degli indici parte da 0) una chiamata del tipo sizeof($array) dove $array &egrave; un array resituir&agrave; un numero superiore di uno all'ultimo indice realmente presente nell'array. Pertanto, per accedere all'ultimo valore dell'array $array si dovr&agrave; usare:<BR><BR>
+<PRE>
+$array[sizeof($array) - 1]
+</PRE>
+nell'opportuno contesto.<BR><BR>
+Il seguente esempio illustra alcune delle funzioni introdotte:<BR>
+<BR>
+Es.<BR>
+<BR>
+<PRE>
+&lt;?PHP
+
+echo sizeof($HTTP_POST_VARS);
+reset($HTTP_POST_VARS);
+
+while (list($key, $val) = each($HTTP_POST_VARS)) {
+   echo &quot;$key =&gt; $val&lt;BR&gt;\n&quot;;
+}
+?&gt;
+</PRE>
+</FONT>
+</BODY>
+</HTML>

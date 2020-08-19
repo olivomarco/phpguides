@@ -1,0 +1,112 @@
+<HTML>
+<HEAD>
+<TITLE>Guida al PHP</TITLE>
+</HEAD>
+
+<BODY>
+<FONT face="Verdana, Arial, Helvetica, Sans Serif" size="3">
+&copy; Marco Olivo &lt;<A href="mailto:me@olivo.net">me@olivo.net</A>&gt;, luglio 2001<BR><BR>
+<!-- $Id$ -->
+<H1>COSTRUTTI FONDAMENTALI</H1>
+Misto di Perl e C (ma anche Java per quel che riguarda le classi), il PHP trae il meglio da questi linguaggi risultando<BR>
+sufficientemente performante ma soprattutto relativamente sicuro. I costrutti principali che non possono mancare nel<BR>
+proprio know-how sono:<BR>
+<UL>
+<LI>if-then-else</LI>
+<LI>for</LI>
+<LI>while</LI>
+</UL>
+Chi conosce gi&agrave; altri linguaggi si senta libero di saltare alla sezione successiva dando magari una occhiata alla<BR>
+sintassi di questi costrutti per avere una visione generale.<BR>
+<BR>
+<H2>IF-THEN-ELSE</H2>
+Costrutto condizionale fondamentale, l'if-then-else in PHP ha questo aspetto (sintassi):<BR>
+<BR>
+<PRE>
+if (condition1) {
+	statement1;
+}
+else if (condition2) {
+	statement2;
+}
+[...]
+else {
+	statement3;
+}
+</PRE>
+<BR>
+Il risultato &egrave; il seguente: arrivati al primo &quot;if&quot; l'interprete valuter&agrave; l'espressione &quot;condition1&quot; e, se essa
+risulter&agrave; vera (ad es., se il numero 6 &egrave; diverso dal numero 5) allora eseguir&agrave; lo statement &quot;statement1&quot;
+In caso contrario passer&agrave; a valutare gli &quot;if successivi&quot; e, se nessuno dovesse essere verificato, eseguir&agrave;
+&quot;statement3&quot;.<BR>
+Notare che solo il primo &quot;if&quot; &egrave; necessario, gli altri sono opzionali. Notare inoltre che una volta preso un &quot;ramo&quot;
+del costrutto verr&agrave; eseguito SOLAMENTE quel blocco di istruzioni, saltando tutti gli altri.
+Notiamo anche che le parentesi graffe racchiudono un blocco di istruzioni. Nonostante siano superflue quando il blocco
+di istruzioni &egrave; rappresentato da una singola istruzione, &egrave; buona norma di programmazione racchiudere sempre le
+istruzioni tra parentesi graffe (in ogni linguaggio). In tal modo, a seguito di una aggiunta successiva, il risultato
+dello script sar&agrave; quello voluto, evitando noiosi e soprattutto costosi tempi morti di debugging nel caso si siano
+dimenticate le parentesi.
+
+<H2>FOR</H2>
+Il ciclo &quot;for&quot; itera un dato blocco di istruzioni k volte. La sua sintassi &egrave;:<BR>
+<BR>
+<PRE>
+for (inizializzazione; condizione; incremento) {
+	blocco_di_istruzioni;
+}
+</PRE>
+<BR>
+&quot;inizializzazione&quot; &egrave; una istruzione che inizializza una (o più) variabili; &quot;condizione&quot; &egrave; la condizione sulle variabili
+di inizializzazione che deve essere verificata perch&egrave; venga eseguito una volta ancora il ciclo; &quot;incremento&quot; &egrave; una
+espressione che incrementa una (o più) delle variabili di inizializzazione<BR>
+<BR>
+Ricordando quanto detto sopra riguardo alle variabili, il seguente esempio stampa 4 volte la stringa &quot;ciao&quot;:<BR>
+<BR>
+<PRE>
+&lt;PHP
+for ($i = 0; $i &lt; 4; $i = $i + 1) {
+	echo &quot;ciao\n&quot;;
+}
+?&gt;
+
+Il carattere &quot;\n&quot; rappresenta un newline, cioe' un carattere di &quot;a capo&quot;
+Notate che l'istruzione
+$i = $i + 1;
+in PHP pu&ograve; essere abbreviata come
+$i++;	/* post-incremento: prima usa il valore, poi incrementa */
+oppure come
+++$i;	/* pre-incremento: prima aumenta di uno, poi usa la variabile cosi' incrementata */
+</PRE>
+<BR>
+Le nozioni di pre-incremento e post-incremento sono superflue per gli scopi di questa guida. Ci&ograve; non significa che
+un buon programmatore non le sappia opportunamente usare, visto che sono presenti in quasi tutti i linguaggi di
+programmazione.
+
+<H2>WHILE</H2>
+Il ciclo &quot;while&quot; permette maggiore flessibilit&agrave; del ciclo &quot;for&quot; in quanto il controllo sulla condizione non &egrave;
+&quot;fisso&quot;, cio&egrave; basato su un incremento di una variabile, ma pu&ograve; essere molto più &quot;flessibile&quot;, in relazione a
+particolari condizioni che si possono verificare sui dati.<BR>
+<BR>
+La sua sintassi &egrave;:<BR>
+<BR>
+<PRE>
+while (condition) {
+	statement;
+}
+</PRE>
+e la sua semantica &egrave; la seguente: esegui &quot;statement&quot; fintantoch&egrave; la condizione &quot;condition&quot; &egrave; verificata.<BR>
+<BR>
+Es.<BR>
+<BR>
+<PRE>
+&lt;?PHP
+$i = 0;
+while ($i &lt; 6) {
+	echo $i;
+	$i++;
+}
+?&gt;
+</PRE>
+</FONT>
+</BODY>
+</HTML>

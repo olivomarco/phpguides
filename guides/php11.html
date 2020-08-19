@@ -1,0 +1,43 @@
+<HTML>
+<HEAD>
+<TITLE>Guida al PHP</TITLE>
+</HEAD>
+
+<BODY>
+<FONT face="Verdana, Arial, Helvetica, Sans Serif" size="3">
+&copy; Marco Olivo &lt;<A href="mailto:me@olivo.net">me@olivo.net</A>&gt;, luglio 2001<BR><BR>
+<!-- $Id$ -->
+<H2>UN ESEMPIO CHIARIFICATORE</H2>
+Vediamo qui di seguito un esempio che schiarir&agrave; certamente le idee:<BR>
+<BR>
+Es.<BR>
+<BR>
+<PRE>
+&lt;?PHP
+/* si collega al DBMS */
+$link = mysql_connect($host, $user, $password);
+/* cambia il database corrente, impostandolo a &quot;database&quot; */
+mysql_select_db(&quot;database&quot;, $link);
+
+/* esegue una query SELECT per recuperare ogni valore presente nella tabella &quot;table&quot; (la tabella sta nel
+database corrente) */
+$result = mysql_query(&quot;SELECT * FROM table&quot;, $link);
+
+/* esegue un ciclo while che permette di recuperare tutte le righe; mette in particolare la riga corrente nell'array
+$row */
+while ($row = mysql_fetch_array($result)) {
+	/* stampa alcuni valori */
+    echo $row[&quot;user_id&quot;] . &quot; &lt;-&gt; &quot; . $row[&quot;fullname&quot;] . &quot;&lt;BR&gt;&quot;;
+}
+/* stampa il numero di righe presenti nel set */
+echo mysql_num_rows($result) . &quot;&lt;BR&gt;&quot;;
+
+/* libera il set di risultati - buona pratica */
+mysql_free_result($result);
+/* chiude la connessione al DBMS - buona pratica */
+mysql_close($link);
+?&gt;
+</PRE>
+</FONT>
+</BODY>
+</HTML>
